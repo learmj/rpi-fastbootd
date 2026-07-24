@@ -371,12 +371,12 @@ namespace rpi {
             LOG(ERROR) << "rpi_fw_crypto_get_key_status failed: " << ret;
             return ret;
         }
-        if (status & ARM_CRYPTO_KEY_STATUS_LOCKED) {
+        if (status & ARM_CRYPTO_KEY_STATUS_READ_LOCKED) {
             LOG(INFO) << "OTP key already LOCKED";
             return 0;
         }
         ret = rpi_fw_crypto_set_key_status(ARM_CRYPTO_DEVICE_PRIVATE_KEY_ID,
-                                           status | ARM_CRYPTO_KEY_STATUS_LOCKED);
+                                           status | ARM_CRYPTO_KEY_STATUS_READ_LOCKED);
         if (ret != 0) {
             LOG(ERROR) << "rpi_fw_crypto_set_key_status(LOCKED) failed: " << ret;
             return ret;
@@ -390,7 +390,7 @@ namespace rpi {
         if (rpi_fw_crypto_get_key_status(ARM_CRYPTO_DEVICE_PRIVATE_KEY_ID, &status) != 0) {
             return false;
         }
-        return (status & ARM_CRYPTO_KEY_STATUS_LOCKED) != 0;
+        return (status & ARM_CRYPTO_KEY_STATUS_READ_LOCKED) != 0;
     }
 
     /**

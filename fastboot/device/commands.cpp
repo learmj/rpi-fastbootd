@@ -694,7 +694,7 @@ namespace {
         if (!fstype_str.empty()) {
             msg += " (type " + fstype_str + ")";
         }
-        msg += ": " + strerror(err);
+        msg += ": " + std::string(strerror(err));
 
         if (err != EINVAL || dev_path.rfind("/dev/mapper/", 0) != 0 || !DeviceHasGpt(dev_path)) {
             return msg;
